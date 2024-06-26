@@ -32,7 +32,10 @@ class ReservationController {
             $this->guest->create();
         }
 
-        $this->reservation->guestId = $this->guest->id;
+        $this->guest->getGuestByNic($guestData['nic']);
+        $guestId = $this->guest->id;
+
+        $this->reservation->guestId = $guestId;
         $this->reservation->bookingDate = date('Y-m-d H:i:s');
         $this->reservation->checkInDate = $reservationData['check_in_date'];
         $this->reservation->checkOutDate = $reservationData['check_out_date'];
