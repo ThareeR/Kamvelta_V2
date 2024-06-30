@@ -33,5 +33,13 @@ class RoomType {
         }
         return false;
     }
+
+        public function updateCount($roomTypeId, $increment) {
+            $query = "UPDATE room_type SET total_rooms = total_rooms + :increment WHERE room_type_id = :roomTypeId";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":increment", $increment);
+            $stmt->bindParam(":roomTypeId", $roomTypeId);
+            $stmt->execute();
+        }
 }
 ?>

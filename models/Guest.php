@@ -1,4 +1,5 @@
 <?php
+
 class Guest {
     private $conn;
     private $tableName = "guests";
@@ -67,6 +68,7 @@ class Guest {
         $stmt->execute();
         return $stmt;
     }
+}
 
     // From Kamvelta_version1
 
@@ -110,5 +112,5 @@ class Guest {
     //     $stmt->bindParam(":id", $id);
     //     return $stmt->execute();
     // }
-}
+// }
 ?>

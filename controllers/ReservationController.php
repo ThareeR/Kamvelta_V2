@@ -1,4 +1,5 @@
 <?php
+
 include_once '../models/Guest.php';
 include_once '../models/Reservation.php';
 include_once '../models/ReservationItem.php';
@@ -71,6 +72,48 @@ class ReservationController {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM reservations";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function show($id) {
+        $query = "SELECT * FROM reservations WHERE reservation_id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function delete($id) {
+        $query = "DELETE FROM reservations WHERE guest_id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $query = "DELETE FROM guests WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":id", $id);
+        return $stmt->execute();
+        }
+
+    public function update($id, $data) {
+        $query = "UPDATE reservations SET guest_id = :guest_id, 
+        check_in_date = :check_in_date, check_out_date = :check_out_date, 
+        reservation_status = :reservation_status WHERE reservation_id = :id";
+        $stmt = $this->db->prepare($query);
+        // Bind parameters
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':guest_id', $data['guest_id']);
+        $stmt->bindParam(':check_in_date', $data['check_in_date']);
+        $stmt->bindParam(':check_out_date', $data['check_out_date']);
+        $stmt->bindParam(':reservation_status', $data['reservation_status']);
+        if ($stmt->execute()) {
+        return true;
+        }
+    } 
 }
 ?>
 

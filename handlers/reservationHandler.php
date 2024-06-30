@@ -47,4 +47,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ../views/reservation/personalInfo.php');
     }
 }
+
+if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 
+'delete') {
+  $reservationId = $_GET['id'];
+  if ($reservationController->delete($reservationId)) {
+    header("Location: ../views/dashboard/manageReservations.php");
+  } else {
+    echo "Error deleting reservation.";
+  }
+} elseif (isset($_POST['id']) && isset($_POST['guest_id']) && 
+isset($_POST['check_in_date']) && isset($_POST['check_out_date']) && isset($_POST['reservation_status'])) {
+  $reservationId = $_POST['id'];
+  $reservationData = [
+    'guest_id' => $_POST['guest_id'],
+    'check_in_date' => $_POST['check_in_date'],
+    'check_out_date' => $_POST['check_out_date'],
+    'reservation_status' => $_POST['reservation_status']
+  ];
+  if ($reservationController->update($reservationId, $reservationData)) {
+    header("Location: ../views/dashboard/manageReservations.php");
+  } else {
+    echo "Error updating reservation.";
+  }
+}
+
 ?>
