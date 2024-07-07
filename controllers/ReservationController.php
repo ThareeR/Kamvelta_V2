@@ -1,9 +1,13 @@
 <?php
 
-include_once '../models/Guest.php';
-include_once '../models/Reservation.php';
-include_once '../models/ReservationItem.php';
-include_once '../models/RoomType.php';
+// include_once '../models/Guest.php';
+include_once(__DIR__ . '/../models/Guest.php');
+include_once(__DIR__ . '/../models/Reservation.php');
+include_once(__DIR__ . '/../models/ReservationItem.php');
+include_once(__DIR__ . '/../models/RoomType.php');
+// include_once '../models/Reservation.php';
+// include_once '../models/ReservationItem.php';
+// include_once '../models/RoomType.php';
 
 class ReservationController {
     private $db;
@@ -113,7 +117,32 @@ class ReservationController {
         if ($stmt->execute()) {
         return true;
         }
-    } 
+    }
+    
+    // Add new function to get all reservations
+    public function getAllReservations() {
+        $query = "SELECT * FROM reservations";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Add new function to get reservations by status
+    public function getReservationsByStatus($status) {
+        $query = "SELECT * FROM reservations WHERE reservation_status = :status";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":status", $status);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getReservationsByGuestId($guestId) {
+        $query = "SELECT * FROM reservations WHERE guest_id = :guest_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":guest_id", $guestId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
 

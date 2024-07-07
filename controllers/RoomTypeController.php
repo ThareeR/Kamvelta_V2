@@ -66,6 +66,13 @@ class RoomTypeController {
         }
         return false;
     }
+
+    public function getMostBookedRoomType() {
+        $query = "SELECT room_type_id, COUNT(*) AS count FROM reservation_items GROUP BY room_type_id ORDER BY count DESC LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['room_type_id'];
+    }
 }
 ?>
 

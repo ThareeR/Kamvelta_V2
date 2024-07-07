@@ -1,5 +1,14 @@
 <?php include '../templates/header.php'; ?>
 
+<div id="wrapper">
+  <div id="container">
+    <div id="loginButton">
+        <a href="../views/auth/login.php" class="btn login-button">Login</a>
+    </div>
+    <!-- <div><input id="button" type="button" value=" " class="loginButton"></div> -->
+  </div>
+</div>
+
 <div id="home" class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -14,7 +23,7 @@
                     <img class="d-block w-100" src="../assets/images/bambooHall2.jpg" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="../assets/images/doubleRoom.jpg" alt="Third slide">
+                    <img class="d-block w-100" src="../assets/images/doubleRoom1.jpg" alt="Third slide">
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100" src="../assets/images/floral.jpg" alt="Fourth slide">

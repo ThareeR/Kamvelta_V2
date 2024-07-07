@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../../config/database.php';
 include '../../templates/header.php';
 include '../../controllers/ReservationController.php';
 include '../../controllers/GuestController.php';

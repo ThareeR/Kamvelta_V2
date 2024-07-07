@@ -4,11 +4,13 @@ session_start();
 include '../../config/database.php';
 include '../../templates/header.php';
 include '../../controllers/ReservationController.php';
+include '../../controllers/GuestController.php';
 
     $database = new Database();
     $db = $database->getConnection();
     $reservationController = new ReservationController($db);
     $reservations = $reservationController->getAll();
+    $guestController = new GuestController($db);
 ?>
 <div class="container mt-5">
     <h2>Manage Reservations</h2>
