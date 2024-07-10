@@ -11,10 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    $_SESSION['username'] = $username; // Setting the session variable.
+
     if ($authController->login($username, $password, $_SESSION)) {
         // Login successful, redirection handled within the login method
     } else {
-        echo "Invalid username or password.";
+        // echo "Invalid username or password.";
+        echo '<script> alert("Invalid username or password")
+        window.location.href="../views/auth/login.php";</script>';
     }
 }
 

@@ -33,6 +33,56 @@ include '../../templates/header.php';
     </form>
 </div>
 
+<!-- Form Validation -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#personal-info-form').submit(function(event) {
+            event.preventDefault();
+
+            var nic = $('#nic').val();
+            var firstName = $('#first_name').val();
+            var lastName = $('#last_name').val();
+            var contactNumber = $('#contact_number').val();
+            var email = $('#email').val();
+            var homeAddress = $('#home_address').val();
+
+            // Validate NIC
+            if (nic.length < 10 || nic.length > 12) {
+                alert('Invalid NIC number. It should be between 10 to 12 characters.');
+                return false;
+            }
+
+            // Validate first name and last name
+            if (!firstName.match(/^[a-zA-Z ]+$/) ||!lastName.match(/^[a-zA-Z ]+$/)) {
+                alert('Invalid first name or last name. It should only contain letters and spaces.');
+                return false;
+            }
+
+            // Validate contact number
+            if (!contactNumber.match(/^\d{10}$/)) {
+                alert('Invalid contact number. It should be a 10-digit number.');
+                return false;
+            }
+
+            // Validate email
+            if (!email.match(/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,}$/)) {
+                alert('Invalid email address.');
+                return false;
+            }
+
+            // Validate home address
+            if (homeAddress.length < 5) {
+                alert('Invalid home address. It should be at least 5 characters.');
+                return false;
+            }
+
+            // If all validations pass, submit the form
+            $(this).unbind('submit').submit();
+        });
+    });
+</script>
+
 <?php
 include '../../templates/footer.php';
 ?>

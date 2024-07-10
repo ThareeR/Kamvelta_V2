@@ -39,7 +39,21 @@ body {
     padding: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: left;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.navbar li {
+    margin-right: 20px;
 }
 
 .navbar a {
@@ -56,10 +70,15 @@ body {
 .navbar .navbar-right {
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 .navbar .navbar-right a {
     margin-left: 15px;
+}
+
+.navbar .login-button{
+    margin-left: 16px;
 }
 
 .navbar_logo{
@@ -133,18 +152,20 @@ form .form-control:focus {
     background-color: #b02a2a;
 }
 
-.login-button {
+/* .navbar .btn .login-button {
+    float: right;
     line-height: 12px;
      width: 100px;
      font-size: 10pt;
      font-family: Arial, Helvetica, sans-serif;
-     margin-top: 1px;
-     margin-right: 2px;
-     position:absolute;
-     top: 100px;
-     right: 50px;
+     margin-top: 8px;
+     margin-right: 16px;
+    position:absolute;
+     top: 20px;
+     right: 50px; 
      background-color: #34b605;
-}
+     background-color: #ced4da;
+} */
 
 /* Carousel */
 .carousel {
@@ -212,7 +233,7 @@ header h1 {
     margin: 0;
 }
 
-nav ul {
+/* nav ul {
     list-style: none;
     padding: 0;
     display: flex;
@@ -225,8 +246,8 @@ nav ul li {
 
 nav ul li a {
     color: #fff;
-    text-decoration: none;
-}
+    text-decoration: none; 
+} */
 
 main {
     padding: 2rem;
@@ -267,4 +288,38 @@ footer {
     background-color: #333;
     color: #fff;
     margin-top: 1rem;
+}
+
+.sidebar {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #337ab7;
+}
+
+.sidebar a:hover {
+color: #23527c;
+}
+
+.sidebar a.active {
+    font-weight: bold;
+    color: #23527c;
+}
+
+.content {
+    padding: 20px;
 }

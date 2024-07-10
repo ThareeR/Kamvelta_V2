@@ -1,4 +1,4 @@
-<?php include_once __DIR__.'/../config.php'; ?>
+<?php include_once __DIR__.'/../config.php';?>
 
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="<?php echo BASE_URL; ?> /assets/css/styles.css">
     <!-- <style>
         body{
-            background-image: url("<?php echo BASE_URL;?>/assets/images/nature.jpg");
+            background-image: url("<?php // echo BASE_URL;?>/assets/images/nature.jpg");
             opacity: 0.2;
             position: absolute;
             z-index: -1;
@@ -28,6 +28,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -54,7 +55,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../views/auth/login.php">Make a Reservation</a>
                 </li>
+
+                <div class="navbar-right">
+                    <?php if (isset($_SESSION['username'])):?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo  BASE_URL; ?>/views/auth/logout.php">Logout</a>
+
+                        </li>
+                    <?php else:?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo   BASE_URL; ?>/views/auth/login.php">Login</a>
+
+                        </li>
+                    <?php endif;?>
+                </div>
             </ul>
+
             <!-- <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <?php //if (isset($_SESSION['username'])): ?>
@@ -65,6 +81,7 @@
                 </li>
             </ul> -->
         </div>
+
     </nav>
 </body>
 </html> 

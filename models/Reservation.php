@@ -15,7 +15,11 @@ class Reservation {
     }
 
     public function create() {
-        $query = "INSERT INTO " . $this->tableName . " SET guest_id=:guest_id, booking_date=:booking_date, check_in_date=:check_in_date, check_out_date=:check_out_date, reservation_status=:reservation_status";
+        $query = "INSERT INTO " . $this->tableName . " SET guest_id=:guest_id, 
+        booking_date=:booking_date, 
+        check_in_date=:check_in_date, 
+        check_out_date=:check_out_date, 
+        reservation_status=:reservation_status";
         $stmt = $this->conn->prepare($query);
 
         $this->guestId=htmlspecialchars(strip_tags($this->guestId));
