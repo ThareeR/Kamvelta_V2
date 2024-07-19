@@ -26,14 +26,14 @@
         <option value="12">December</option>
     </select>
 
-    <canvas id="bookingsChart" width="400" height="200"></canvas>
+    <canvas id="bookingsChart" width="400" height="200" style="border: 1px solid black;"></canvas>
 
     <script>
         function fetchBookings() {
             const month = document.getElementById('month').value;
             if (!month) return;
 
-            fetch(`/controllers/BookingController.php?month=${month}`)
+            fetch(`../../controllers/BookingController.php?month=${month}`)
                 .then(response => response.json())
                 .then(data => {
                     const labels = data.map(item => item.type_name);

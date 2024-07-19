@@ -15,7 +15,7 @@ include '../../templates/header.php';
     <ul>
         <li><a href="../reservation/checkAvailability.php" class="btn btn-primary">Make a Room Reservation</a></li>
         <p></p>
-        <li><a href="../reservation/hallReservation.php" class="btn btn-primary">Make a Banquet Hall Reservation</a></li>
+        <li><a href="../reservation/banquetHallReservationsList.php" class="btn btn-primary">Make a Banquet Hall Reservation</a></li>
     </ul>
     
 </div>

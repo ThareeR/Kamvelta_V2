@@ -148,8 +148,22 @@ form .form-control:focus {
     background-color: #dc3545;
 }
 
-.btn-danger:hover {
-    background-color: #b02a2a;
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Or use justify-content: flex-start; */
+    margin-bottom: 10px; /* Adjust space between button groups */
+}
+
+.button-container .btn {
+    flex: 1;
+    margin: 0 5px; /* Adjust space between buttons */
+    text-align: center;
+}
+
+
+.btn-manage {
+    width: 50px;
+    display: inline-block;
 }
 
 /* .navbar .btn .login-button {

@@ -32,8 +32,8 @@
                 <td><?php echo $guest['email']; ?></td>
                 <td><?php echo $guest['home_address']; ?></td>
                 <td>
-                    <a href="editCustomer.php?id=<?php echo $guest['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="../../handlers/guestHandler.php?id=<?php echo $guest['id']; ?>&action=delete" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="editCustomer.php?id=<?php echo $guest['id']; ?>" class="btn btn-sm btn-primary btn-manage">Edit</a>
+                    <a href="../../handlers/guestHandler.php?id=<?php echo $guest['id']; ?>&action=delete" class="btn btn-sm btn-danger btn-manage" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a>
                 </td>
             </tr>
             <?php endforeach; ?>

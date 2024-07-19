@@ -8,6 +8,7 @@ if (isset($_SESSION['reservation_id'])) {
 }
 
 include '../../templates/footer.php';
+
 ?>
 
 <?php

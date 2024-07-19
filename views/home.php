@@ -34,7 +34,7 @@
 
 <div id="about" class="mt-5">
     <h2>About Us</h2>
-    <p>Information about Kamvelta Holiday Resort...</p>
+    <p>Kamvelta Holiday Resort, established in 2005, is located in Bandaragama, Sri Lanka, just 56 km from Bandaranaike International Airport and 26 km from Colombo. The resort features a banquet hall that can accommodate up to 250 guests, an outdoor hall, and a conference hall. Kamvelta offers a variety of services, including accommodation, restaurants, banquet facilities, event hosting, photo locations, and other hospitality services. Surrounded by peaceful scenic beauty, the hotel provides a village experience and is dedicated to offering consistent, reliable, and memorable service. The staff follows strict ethical business practices to ensure guests feel at home. The resort also arranges tours and day excursions to enhance your stay.</p>
 </div>
 
 <div id="contact" class="mt-5">

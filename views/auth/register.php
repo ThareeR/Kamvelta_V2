@@ -4,7 +4,7 @@
     <?php if (isset($_GET['error']) && $_GET['error'] == 'registration_failed'): ?>
         <div class="alert alert-danger">Registration failed. Please try again.</div>
     <?php endif; ?>
-    <form action="../handlers/registerHandler.php" method="post">
+    <form action="../../handlers/registrationHandler.php" method="post">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>

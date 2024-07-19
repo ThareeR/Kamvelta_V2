@@ -12,17 +12,26 @@ class RoomController {
     }
 
     public function createRoom($data) {
-        $this->room->room_type_id = $data['room_type_id'];
-        $this->room->status = $data['status'];
-       // return $this->room->create();
+    //     $this->room->room_type_id = $data['room_type_id'];
+    //     $this->room->status = $data['status'];
+    //    // return $this->room->create();
+    //    $result = $this->room->create();
 
-       $result = $this->room->create();
+        $query = "INSERT INTO rooms (room_type_id, status) VALUES (:room_type_id, :status)";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':room_type_id', $data['room_type_id']);
+        $stmt->bindParam(':status', $data['status']);
 
         // Update the total rooms count for the room type
         $roomTypeId = $data['room_type_id'];
         $this->updateRoomTypeCount($roomTypeId, 1); // increment by 1
 
-        return $result;
+        if($stmt->execute()){
+            return true;
+        }
+
+        // return $result;
     }
 
     public function readAllRooms() {
@@ -51,6 +60,23 @@ class RoomController {
         // Assume you have a RoomType model with a method to update the count
         $roomTypeModel = new RoomType($this->db);
         $roomTypeModel->updateCount($roomTypeId, $increment);
+    }
+
+    public function show($id) {
+        try {
+            $query = "SELECT * FROM rooms WHERE room_id = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result;
+            } else {
+                throw new Exception("Room not found");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching room: " . $e->getMessage());
+        }
     }
 }
 ?>

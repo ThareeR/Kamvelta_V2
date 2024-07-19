@@ -1,35 +1,51 @@
 <?php
 //session_start();
+include_once '../../templates/header.php';
 include_once '../../config/database.php';
-include_once '../../controllers/RoomController.php';
+// include_once '../../controllers/RoomController.php';
 
-$database = new Database();
-$db = $database->getConnection();
+// $database = new Database();
+// $db = $database->getConnection();
 
-$controller = new RoomController($db);
+// $controller = new RoomController($db);
 
-if($_POST) {
-    $data = [
-        'room_type_id' => $_POST['room_type_id'],
-        'status' => $_POST['status']
-    ];
-    if($controller->createRoom($data)) {
-        echo "Room was created.";
-    } else {
-        echo "Unable to create room.";
-    }
-}
+// if($_POST) {
+//     $data = [
+//         'room_type_id' => $_POST['room_type_id'],
+//         'status' => $_POST['status']
+//     ];
+//     if($controller->createRoom($data)) {
+//         echo "Room was created.";
+//     } else {
+//         echo "Unable to create room.";
+//     }
+// }
+
 ?>
+<div class="container mt-5">
+    <h2>Add Room</h2>
+    <form action="../../handlers/roomHandler.php" method="post">
+        <label for="room_type_id">Room Type ID</label>
+        <!-- <input type="text" id="room_type_id" name="room_type_id"><br> -->
+        <select name="room_type_id" id="room_type_id" class="form-control" required>
+            <option value="1">1 - Single</option>
+            <option value="2">2 - Double</option>
+            <option value="3">3 - Triple</option>
+        </select>
 
-<form action="addRoom.php" method="post">
-    <label for="room_type_id">Room Type ID</label>
-    <input type="text" id="room_type_id" name="room_type_id"><br>
+        <label for="status">Status</label>
+        <!-- <input type="text" id="status" name="status"><br> -->
+        <select name="status" id="status" class="form-control" required>
+            <option value="available">Available</option>
+            <option value="unavailable">Unavailable</option>
+            <option value="booked">Booked</option>
+        </select>
 
-    <label for="status">Status</label>
-    <input type="text" id="status" name="status"><br>
+        <button type="submit" class="btn btn-primary">Add Room</button>
 
-    <input type="submit" value="Add Room">
-</form>
+    </form>
+</div>
+
 
 
 <?php 
@@ -75,4 +91,4 @@ if($_POST) {
     </form> 
 </div>  -->
 
-<?php // include '../../templates/footer.php'; ?>
+<?php  include '../../templates/footer.php'; ?>

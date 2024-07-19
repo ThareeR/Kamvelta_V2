@@ -14,6 +14,9 @@ include '../../controllers/GuestController.php';
 ?>
 <div class="container mt-5">
     <h2>Manage Reservations</h2>
+    <div>
+    <a href="../reservation/checkAvailability.php" class="btn btn-primary">Add Reservation</a>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -39,10 +42,11 @@ include '../../controllers/GuestController.php';
                 <td><?php echo $reservation['check_out_date']; ?></td>
                 <td><?php echo $reservation['reservation_status']; ?></td>
                 <td>
-                    <a href="viewReservation.php?id=<?php echo $reservation['reservation_id']; 
-                    ?>" class="btn btn-sm btn-primary">View</a>
+                    <div class="button-container">
+                    <a href="viewReservation.php?id=<?php echo $reservation['reservation_id']; ?>" class="btn btn-sm btn-primary">View</a>
                     <a href="editReservation.php?id=<?php echo $reservation['reservation_id']; ?>" class="btn btn-sm btn-primary">Edit</a>
                     <a href="../../handlers/reservationHandler.php?id=<?php echo $reservation['reservation_id']; ?>&action=delete" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -19,7 +19,18 @@ $roomTypeController = new RoomTypeController($db);
 include_once '../../controllers/GuestController.php';
 $guestController = new GuestController($db);
 ?>
+<head>
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        button {
+        display: block;
+        margin-bottom: 10px; /* add some space between buttons */
+    }
+    </style>
+</head>
 
+<body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
@@ -30,8 +41,8 @@ $guestController = new GuestController($db);
                     <li><a href="manageReservations.php">Manage Reservations</a></li>
                     <li><a href="manageRooms.php">Manage Rooms</a></li>
                     <li><a href="manageBanquetHall.php">Manage Banquet Hall</a></li>
-                    <li><a href="managePayments.php">Manage Payments</a></li>
-                    <li><a href="manageEmployees.php">Manage Employees</a></li>
+                    <!-- <li><a href="managePayments.php">Manage Payments</a></li>
+                    <li><a href="manageEmployees.php">Manage Employees</a></li> -->
                 </ul>
             </div>
         </div>
@@ -50,102 +61,81 @@ $guestController = new GuestController($db);
 
             <div class="row">
                 <div class="col-md-4">
-                    <h3>Reservation Reports</h3>
-                    <ul>
-                        <li><strong>All Reservations:</strong></li>
-                        <ul>
-                            <?php
-                            $reservations = $reservationController->getAllReservations();
-                            foreach ($reservations as $reservation) {
-                                echo "<li>" . $reservation['reservation_id'] . " - " . $reservation['check_in_date'] . " to " . $reservation['check_out_date'] . " (" . $reservation['reservation_status'] . ")</li>";
-                            }
-                            ?>
-                        </ul>
-                        <li><strong>Reservations by Status:</strong></li>
-                        <ul>
-                            <li>Pending:</li>
-                            <ul>
-                                <?php
-                                $pendingReservations = $reservationController->getReservationsByStatus('pending');
-                                foreach ($pendingReservations as $reservation) {
-                                    echo "<li>" . $reservation['reservation_id'] . " - " . $reservation['check_in_date'] . " to " . $reservation['check_out_date'] . "</li>";
-                                }
-                                ?>
-                            </ul>
-                            <li>Confirmed:</li>
-                            <ul>
-                                <?php
-                                $confirmedReservations = $reservationController->getReservationsByStatus('confirmed');
-                                foreach ($confirmedReservations as $reservation) {
-                                    echo "<li>" . $reservation['reservation_id'] . " - " . $reservation['check_in_date'] . " to " . $reservation['check_out_date'] . "</li>";
-                                }
-                                ?>
-                            </ul>
-                            <li>Cancelled:</li>
-                            <ul>
-                                <?php
-                                $cancelledReservations = $reservationController->getReservationsByStatus('cancelled');
-                                foreach ($cancelledReservations as $reservation) {
-                                    echo "<li>" . $reservation['reservation_id'] . " - " . $reservation['check_in_date'] . " to " . $reservation['check_out_date'] . "</li>";
-                                }
-                                ?>
-                            </ul>
-                        </ul>
-                        <li><strong>Reservations by Guest:</strong></li>
-                        <ul>
-                            <?php
-                            $guests = $guestController->index();
-                            foreach ($guests as $guest) {
-                                $reservations = $reservationController->getReservationsByGuestId($guest['id']);
-                                if (count($reservations) > 0) {
-                                    echo "<li>" . $guest['first_name'] . " " . $guest['last_name'] . ": </li>";
-                                    echo "<ul>";
-                                    foreach ($reservations as $reservation) {
-                                        echo "<li>" . $reservation['reservation_id'] . " - " . $reservation['check_in_date'] . " to " . $reservation['check_out_date'] . "</li>";
+                    <div>
+                        <h2>Revenue Reports</h2>
+                    </div>
+                    <div><button onclick="window.location.href='../reports/annualRoomRevenueReport.php'">Annual Room Revenue</button></div>
+                    <div><button onclick="window.location.href='../reports/annualBanquetRevenueReport.php'">Annual Banquet Revenue</button></div>
+                    <div><button onclick="window.location.href='../reports/monthlyRoomRevenueReport.php'">Monthly Room Revenue</button></div>
+                    <div><button onclick="window.location.href='../reports/monthlyBanquetRevenueReport.php'">Monthly Banquet Revenue</button></div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <h2>Room Type Bookings</h2>
+                        <canvas id="roomTypeChart"></canvas>
+                    </div>
+
+                    <script>
+                        fetch('../reports/getRoomTypeBookings.php')
+                            .then(response => response.json())
+                            .then(data => {
+                                const labels = data.map(item => item.type_name);
+                                const bookings = data.map(item => item.bookings);
+
+                                const ctx = document.getElementById('roomTypeChart').getContext('2d');
+                                new Chart(ctx, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            data: bookings,
+                                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                        }]
                                     }
-                                    echo "</ul>";
-                                }
-                            }
-                            ?>
-                        </ul>
-                    </ul>
+                                });
+                            });
+                    </script>
                 </div>
                 <div class="col-md-4">
-                    <h3>Revenue Reports</h3>
-                    <ul>
-                        <li><strong>Monthly Revenue:</strong></li>
-                        <ul>
-                            <?php
-                            $currentYear = date('Y');
-                            for ($month = 1; $month <= 12; $month++) {
-                                $revenue = $paymentController->getRevenueByMonth($month, $currentYear);
-                                if ($revenue != null) {
-                                    echo "<li>Month " . $month . ": LKR " . $revenue . "</li>";
-                                }
-                            }
-                            ?>
-                        </ul>
-                        <li><strong>Yearly Revenue:</strong></li>
-                        <ul>
-                            <?php
-                            $currentYear = date('Y');
-                            $revenue = $paymentController->getRevenueByYear($currentYear);
-                            echo "<li>Year " . $currentYear . ": LKR " . $revenue . "</li>";
-                            ?>
-                        </ul>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Most Booked Room Type</h3>
-                    <p><strong>Most Booked Room Type:</strong> <?php
-                    $mostBookedRoomTypeId = $roomTypeController->getMostBookedRoomType();
-                    $roomType = $roomTypeController->show($mostBookedRoomTypeId);
-                    echo $roomType['type_name'];
-                    ?>
-                    <br><br>
-                    <a href="<?php echo BASE_URL; ?>/views/reservation/bookingsByRoomType.php" class="btn">Bookings by Room Type</a>
-                    
-                    </p>
+                    <div class="chart-container">
+                        <h2>Monthly Room Reservations</h2>
+                        <canvas id="monthlyRoomReservationsChart"></canvas>
+                    </div>
+                    <script>
+                        // Fetch Monthly Room Reservations
+                        fetch('../reports/getMonthlyRoomReservations.php')
+                            .then(response => response.json())
+                            .then(data => {
+                                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                const roomReservations = Array(12).fill(0);
+
+                                data.forEach(item => {
+                                    roomReservations[item.month - 1] = item.reservation_count;
+                                });
+
+                                const ctx = document.getElementById('monthlyRoomReservationsChart').getContext('2d');
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: months,
+                                        datasets: [
+                                            {
+                                                label: 'Room Reservations',
+                                                data: roomReservations,
+                                                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                                            }
+                                        ]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                    </script>
                 </div>
             </div>
         </div>
@@ -161,7 +151,7 @@ $guestController = new GuestController($db);
             <li><a href="manageEmployees.php" class="btn">Manage Employees</a></li>
         </ul> -->
 </div>
-
+</body>
 <!-- <div class="container mt-5">
     
 

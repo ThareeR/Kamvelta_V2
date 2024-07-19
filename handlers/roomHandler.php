@@ -8,10 +8,27 @@ $database = new Database();
 $db = $database->getConnection();
 $roomController = new RoomController($db);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data= [$room_type_id = $_POST['room_type_id'],
-    $room_number = $_POST['room_number'],
-    $status = $_POST['status']];
+if(isset($_POST['room_id']) && isset($_POST['room_type_id']) && isset($_POST['status'])){
+    $roomId = $_POST['room_id'];
+    $roomData = [
+        'room_id' => $roomId,
+        'room_type_id' => $_POST['room_type_id'],
+        'status' => $_POST['status']
+    ];
+
+    if($roomController->updateRoom($roomId, $roomData)){
+        header("Location: ../views/dashboard/manageRooms.php");
+    }
+    else{
+        echo "Error Updating Room";
+    }
+}
+
+elseif (isset($_POST['room_type_id']) && isset($_POST['status'])) {
+    $data= [
+        'room_type_id' => $_POST['room_type_id'],
+        'status' => $_POST['status']
+    ];
     if ($roomController->createRoom($data)) {
         $_SESSION['message'] = "Room added successfully";
     } else {

@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
 
             echo "Reservation confirmed.";
+            // header('Location: ../views/reservation/reservationConfirm.php');
         } else {
             echo "Payment failed.";
         }

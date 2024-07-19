@@ -1,9 +1,17 @@
 <?php
+
+// Added later
+include_once __DIR__.'/../config/database.php';
+include_once __DIR__.'/../models/Guest.php';
+// ----
+
 class GuestController {
     private $db;
+    private $guest; // ----
 
     public function __construct($db) {
         $this->db = $db;
+        $this->guest = new Guest($db); // This line was added when implementing hall booking
     }
 
     public function index() {
@@ -63,6 +71,20 @@ class GuestController {
     }
 
     public function delete($id) {
+
+        $query = "SELECT reservation_id FROM reservations WHERE guest_id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $reservationIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        foreach ($reservationIds as $reservationId) {
+            $query = "DELETE FROM reservation_items WHERE reservation_id = :reservation_id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(":reservation_id", $reservationId);
+            $stmt->execute();
+        }
+
         $query = "DELETE FROM reservations WHERE guest_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -73,6 +95,26 @@ class GuestController {
         $stmt->bindParam(":id", $id);
         return $stmt->execute();
     }
+
+    // This is added for Hall Reservations
+    public function getByNIC($nic) {
+        $this->guest->nic = $nic;
+        if ($this->guest->getGuestByNic($nic)) {
+            // return $this->guest->getGuestByNic($nic);
+            $query = "SELECT * FROM " . 'guests' . " WHERE nic = :nic LIMIT 0,1";
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindParam(':nic', $nic);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->guest = $row;
+            return $this->guest;
+
+        }
+        return null;
+    }
+
 }
 ?>
 
