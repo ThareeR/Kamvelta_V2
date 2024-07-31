@@ -1,13 +1,59 @@
 <?php
+session_start();
 include '../../templates/header.php';
 
-if (isset($_SESSION['reservation_id'])) {
-    echo "<div class='container mt-5'><h2>Reservation Confirmed</h2><p>Your reservation ID is " . $_SESSION['reservation_id'] . "</p></div>";
-} else {
-    echo "<div class='container mt-5'><h2>Reservation Failed</h2><p>Please try again.</p></div>";
+if (!isset($_SESSION['reservation_id'])) {
+    echo "No reservation found.";
+    exit;
 }
 
-include '../../templates/footer.php';
+$reservationId = $_SESSION['reservation_id'];
+$guestEmail = $_SESSION['guest_email'];
+$guestFirstName = $_SESSION['guest_first_name'];
+$guestLastName = $_SESSION['guest_last_name'];
+$checkInDate = $_SESSION['check_in_date'];
+$checkOutDate = $_SESSION['check_out_date'];
+$totalCharge = $_SESSION['total_charge'];
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmation</title>
+</head>
+<body>
+    <h1>Reservation Confirmation</h1>
+    <p>Dear <?php echo htmlspecialchars($guestFirstName . ' ' . $guestLastName); ?>,</p>
+    <p>Thank you for your reservation. Your reservation ID is <?php echo htmlspecialchars($reservationId); ?>.</p>
+    <p>Check-in Date: <?php echo htmlspecialchars($checkInDate); ?></p>
+    <p>Check-out Date: <?php echo htmlspecialchars($checkOutDate); ?></p>
+    <p>Total Charge: <?php echo htmlspecialchars($totalCharge); ?></p>
+    <p>We look forward to your stay.</p>
+    <p>We have sent a confirmation email to <?php echo htmlspecialchars($guestEmail); ?>.</p>
+</body>
+</html>
+
+<?php
+// Clear session data after displaying the confirmation
+session_unset();
+session_destroy();
+?>
+
+
+
+<?php
+// include '../../templates/header.php';
+
+// if (isset($_SESSION['reservation_id'])) {
+//     echo "<div class='container mt-5'><h2>Reservation Confirmed</h2><p>Your reservation ID is " . $_SESSION['reservation_id'] . "</p></div>";
+// } else {
+//     echo "<div class='container mt-5'><h2>Reservation Failed</h2><p>Please try again.</p></div>";
+// }
+
+// include '../../templates/footer.php';
 
 ?>
 

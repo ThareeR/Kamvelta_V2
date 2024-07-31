@@ -115,5 +115,23 @@ class BanquetHallReservation {
         return $row['count'] == 0;
     }
 
+    public function checkAvailability($hall_id, $date) {
+        try {
+            $query = "SELECT start_time, end_time FROM banquet_hall_reservations WHERE hall_id = ? AND event_date = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$hall_id, $date]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Handle error, might want to log it or return an error message
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function addReservation($date, $startTime, $endTime, $numGuests /*, other fields */) {
+        $query = "INSERT INTO banquet_hall_reservations (event_date, start_time, end_time, num_guests) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$date, $startTime, $endTime, $numGuests /*, other values */]);
+    }
 }
 ?>

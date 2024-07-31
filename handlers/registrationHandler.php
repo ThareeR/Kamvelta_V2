@@ -12,10 +12,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    if ($authController->register($username, $password, $role)) {
-        echo "Registration successful. <a href='../views/auth/login.php'>Login here</a>.";
-    } else {
-        echo "Registration failed. Please try again.";
+    $query = "SELECT * FROM users WHERE username = :username";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+
+    if($stmt->rowCount() >0){
+        header("Location: ../views/auth/register.php?error=username_exists");
+        exit;
     }
+    else{
+        if ($authController->register($username, $password, $role)) {
+            if($role=='admin'){
+                header("Location: ../views/dashboard/adminDashboard.php");
+            }
+            else{
+            // echo "Registration successful. <a href='../views/auth/login.php'>Login here</a>.";
+            header("Location: ../views/auth/registerSuccess.php");
+            }
+        } else {
+            echo "Registration failed. Please try again.";
+        }
+    }  
 }
 ?>
+

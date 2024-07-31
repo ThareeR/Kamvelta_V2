@@ -46,10 +46,10 @@
                         Services
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"><font color = "black">Accommodation</font></a>
-                        <a class="dropdown-item" href="#"><font color = "black">Banquet Hall</font></a>
-                        <a class="dropdown-item" href="#"><font color = "black">Restaurant</font></a>
-                        <a class="dropdown-item" href="#"><font color = "black">Photo Location</font></a>
+                        <a class="dropdown-item" href="<?php echo BASE_URL; ?>/views/home.php#accommodation"><font color = "black">Accommodation</font></a>
+                        <a class="dropdown-item" href="<?php echo BASE_URL; ?>/views/home.php#banquethall"><font color = "black">Banquet Hall</font></a>
+                        <a class="dropdown-item" href="<?php echo BASE_URL; ?>/views/home.php#restaurant"><font color = "black">Restaurant</font></a>
+                        <a class="dropdown-item" href="<?php echo BASE_URL; ?>/views/home.php#photolocation"><font color = "black">Photo Location</font></a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -59,12 +59,12 @@
                 <div class="navbar-right">
                     <?php if (isset($_SESSION['username'])):?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo  BASE_URL; ?>/views/auth/logout.php">Logout</a>
+                            <a class="nav-link" href="<?php echo BASE_URL; ?>/views/auth/logout.php">Logout</a>
 
                         </li>
                     <?php else:?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo   BASE_URL; ?>/views/auth/login.php">Login</a>
+                            <a class="nav-link" href="<?php echo BASE_URL; ?>/views/auth/login.php">Login</a>
 
                         </li>
                     <?php endif;?>

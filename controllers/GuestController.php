@@ -108,8 +108,9 @@ class GuestController {
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->guest = $row;
-            return $this->guest;
+            // $this->guest = $row;
+            // return $this->guest;
+            return $row;
 
         }
         return null;

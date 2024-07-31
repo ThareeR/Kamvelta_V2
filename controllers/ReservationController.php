@@ -1,4 +1,10 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__.'/../assets/PHPMailer-master/src/Exception.php';
+require __DIR__.'/../assets/PHPMailer-master/src/PHPMailer.php';
+require __DIR__.'/../assets/PHPMailer-master/src/SMTP.php';
 
 // include_once '../models/Guest.php';
 include_once(__DIR__ . '/../models/Guest.php');
@@ -58,6 +64,35 @@ class ReservationController {
 
                 $this->roomType->updateAvailability($item['room_type_id'], $item['room_count']);
             }
+
+            // Send confirmation email to guest using PHP mail() function
+            // $to = $guestData['email'];
+            // $subject = 'Reservation Confirmation';
+            // $headers = "From: rasithharie@gmail.com\r\n";
+            // $headers .= "Reply-To: rasithharie@gmail.com\r\n";
+            // $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+            // $message = '
+            // <html>
+            // <head>
+            //     <title>Reservation Confirmation</title>
+            // </head>
+            // <body>
+            //     <p>Dear ' . $guestData['first_name'] . ' ' . $guestData['last_name'] . ',</p>
+            //     <p>Thank you for your reservation. Your reservation ID is ' . $reservationId . '.</p>
+            //     <p>Check-in Date: ' . $reservationData['check_in_date'] . '</p>
+            //     <p>Check-out Date: ' . $reservationData['check_out_date'] . '</p>
+            //     <p>Total Charge: ' . $reservationData['total_charge'] . '</p>
+            //     <p>We look forward to your stay.</p>
+            // </body>
+            // </html>';
+
+            // if (mail($to, $subject, $message, $headers)) {
+            //     echo 'Reservation successful and email sent.';
+            // } else {
+            //     echo 'Reservation successful but email could not be sent.';
+            // } 
+
             return $reservationId;
         }
         return false;

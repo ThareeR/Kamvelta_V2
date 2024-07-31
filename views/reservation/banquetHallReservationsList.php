@@ -14,12 +14,14 @@ $halls = $controller->getAll();
         <?php foreach ($halls as $hall): ?>
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="../../assets/images/bambooHall.jpg" class="card-img-top" alt="Hall Image">
+                <img src="../../assets/images/<?php echo strtolower(str_replace(' ', '_', $hall['hall_name'])) . '_' . $hall['hall_id'] . '.jpg'; ?>" class="card-img-top img-fluid" alt="Hall Image">
+                <!-- <img src="../../assets/images/bambooHall.jpg" class="card-img-top" alt="Hall Image"> -->
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $hall['hall_name']; ?></h5>
                     <p class="card-text">Capacity: <?php echo $hall['capacity']; ?></p>
                     <p class="card-text">Charge per Hour: <?php echo $hall['charge_per_hour']; ?></p>
-                    <a href="banquetHallReservationForm.php?hall_id=<?php echo $hall['hall_id']; ?>" class="btn btn-primary">Reserve</a>
+                    <!-- <a href="banquetHallReservationForm.php?hall_id=<?php //echo $hall['hall_id']; ?>" class="btn btn-primary">Reserve</a> -->
+                    <a href="banquetHallDate.php?hall_id=<?php echo $hall['hall_id']; ?>" class="btn btn-primary">Reserve</a>
                 </div>
             </div>
         </div>

@@ -337,3 +337,20 @@ color: #23527c;
 .content {
     padding: 20px;
 }
+
+.card {
+    height: 300px; /* Set a fixed height */
+    width: 250px; /* Set a fixed width */
+  }
+  
+  .card img {
+    height: 150px; /* Set a fixed height for the image */
+    width: 100%; /* Set the width to 100% to fill the card */
+    object-fit: cover; /* Make the image cover the entire card */
+  }
+  
+  .card-body {
+    padding: 20px; /* Add some padding to the card body */
+  }
+
+

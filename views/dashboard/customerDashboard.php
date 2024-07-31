@@ -12,11 +12,13 @@ include '../../templates/header.php';
     <?php endif;?>
 
     <p>What would you like to do?</p>
-    <ul>
+    <button class="btn btn-primary" onclick="location.href='../reservation/checkAvailability.php'">Make a Room Reservation</button>
+    <button class="btn btn-primary" onclick="location.href='../reservation/banquetHallReservationsList.php'">Make a Banquet Hall Reservation</button>
+    <!-- <ul>
         <li><a href="../reservation/checkAvailability.php" class="btn btn-primary">Make a Room Reservation</a></li>
         <p></p>
         <li><a href="../reservation/banquetHallReservationsList.php" class="btn btn-primary">Make a Banquet Hall Reservation</a></li>
-    </ul>
+    </ul> -->
     
 </div>
 <?php include '../../templates/footer.php'; ?>

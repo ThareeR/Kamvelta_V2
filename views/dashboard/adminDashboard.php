@@ -41,6 +41,7 @@ $guestController = new GuestController($db);
                     <li><a href="manageReservations.php">Manage Reservations</a></li>
                     <li><a href="manageRooms.php">Manage Rooms</a></li>
                     <li><a href="manageBanquetHall.php">Manage Banquet Hall</a></li>
+                    <li><a href="../auth/adminRegistration.php"><br>Admin Registration</a></li>
                     <!-- <li><a href="managePayments.php">Manage Payments</a></li>
                     <li><a href="manageEmployees.php">Manage Employees</a></li> -->
                 </ul>

@@ -17,24 +17,24 @@ $end_time = $_POST['end_time'];
 $number_of_guests = $_POST['number_of_guests'];
 
 // Check if hall is available
-if (!$reservationController->isHallAvailable($hall_id, $event_date)) {
-    $_SESSION['error'] = "Hall is unavailable on the selected date.";
+// if (!$reservationController->isHallAvailable($hall_id, $event_date)) {
+//     $_SESSION['error'] = "Hall is unavailable on the selected date.";
 
-   echo '<script>
-    alert("Hall is unavailable on the selected date.");
-    window.location.href = "../views/reservation/banquetHallReservationForm.php?hall_id='. $hall_id . '";
-    </script>';
+//    echo '<script>
+//     alert("Hall is unavailable on the selected date.");
+//     window.location.href = "../views/reservation/banquetHallReservationForm.php?hall_id='. $hall_id . '";
+//     </script>';
 
-    // header("Location: ../views/reservation/banquetHallReservationForm.php?hall_id=$hall_id");
-    exit();
-}
+//     // header("Location: ../views/reservation/banquetHallReservationForm.php?hall_id=$hall_id");
+//     exit();
+// }
 
 // Debugging print statements
-echo "hall_id: " . $hall_id . "<br>";
-echo "event_date: " . $event_date . "<br>";
-echo "start_time: " . $start_time . "<br>";
-echo "end_time: " . $end_time . "<br>";
-echo "number_of_guests: " . $number_of_guests . "<br>";
+// echo "hall_id: " . $hall_id . "<br>";
+// echo "event_date: " . $event_date . "<br>";
+// echo "start_time: " . $start_time . "<br>";
+// echo "end_time: " . $end_time . "<br>";
+// echo "number_of_guests: " . $number_of_guests . "<br>";
 
 // Store data in session
 $_SESSION['hall_id'] = $hall_id;

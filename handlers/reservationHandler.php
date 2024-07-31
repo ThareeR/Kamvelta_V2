@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $_SESSION['reservation_items'] = $reservationItems;
-        $_SESSION['total_amount'] = $totalAmount;
+        $_SESSION['total_charge'] = $totalAmount;
 
         header('Location: ../views/reservation/personalInfo.php');
     }

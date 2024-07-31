@@ -53,15 +53,15 @@ class BanquetHall {
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->hall_name = $row['hall_name'];
-        $this->capacity = $row['capacity'];
-        $this->charge_per_hour = $row['charge_per_hour'];
-        // if ($row) {
-        //     $this->hall_id = $row['hall_id'];
-        //     $this->hall_name = $row['hall_name'];
-        //     $this->capacity = $row['capacity'];
-        //     $this->charge_per_hour = $row['charge_per_hour'];
-        // }
+        // $this->hall_name = $row['hall_name'];
+        // $this->capacity = $row['capacity'];
+        // $this->charge_per_hour = $row['charge_per_hour'];
+        if ($row) {
+            $this->hall_id = $row['hall_id'];
+            $this->hall_name = $row['hall_name'];
+            $this->capacity = $row['capacity'];
+            $this->charge_per_hour = $row['charge_per_hour'];
+        }
     }
 
     public function update() {

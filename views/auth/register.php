@@ -1,8 +1,10 @@
 <?php include '../../templates/header.php'; ?>
 <div class="container mt-5">
-    <h2>Register</h2>
+    <h2>Customer Registration</h2>
     <?php if (isset($_GET['error']) && $_GET['error'] == 'registration_failed'): ?>
         <div class="alert alert-danger">Registration failed. Please try again.</div>
+    <?php elseif (isset($_GET['error']) && $_GET['error'] == 'username_exists'): ?>
+        <div class="alert alert-danger">Username already exists. Please choose a different username.</div>
     <?php endif; ?>
     <form action="../../handlers/registrationHandler.php" method="post">
         <div class="form-group">
@@ -13,13 +15,14 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="role" class="form-label">Role</label>
             <select class="form-controler" id="role" name="role">
                 <option value="customer">Customer</option>
                 <option value="admin">Admin</option>
             </select>
-        </div>
+        </div> -->
+        <input type="hidden" name="role" value="customer">
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </div>

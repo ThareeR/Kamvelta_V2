@@ -2,12 +2,18 @@
 session_start();
 include '../../templates/header.php';
 
-$total_amount = $_SESSION['total_amount'];
+// Ensure total_charge is correctly retrieved from the session
+if (!isset($_SESSION['total_charge'])) {
+    echo "Total charge not set.";
+    exit;
+}
+
+$total_amount = $_SESSION['total_charge'];
 ?>
 
 <div class="container mt-5">
     <h2>Select Payment Method</h2>
-    <form action="../../handlers/reservationConfirm.php" method="post">
+    <form action="../../handlers/reservationConfirmHandler.php" method="post">
         <div class="form-group">
             <label for="payment_method">Payment Method:</label>
             <select name="payment_method" id="payment_method" class="form-control" required>
