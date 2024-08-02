@@ -3,25 +3,66 @@ session_start();
 include '../../templates/header.php';
 
 $availableRooms = $_SESSION['available_rooms'];
-?>
 
+// Array to match room_type_id to image URLs
+$imageURLs = [
+    1 => '../../assets/images/doubleRoom.jpg',
+    2 => '../../assets/images/doubleRoom1.jpg',
+    3 => '../../assets/images/accommodation-1.jpg',
+];
+
+?>
+<head>
+    <style>
+        .room-details {
+    display: flex;
+    align-items: center;
+}
+
+.room-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.room-info {
+    flex-grow: 1;
+}
+
+    </style>
+</head>
+
+<body>
 <div class="container mt-5">
     <h2>Select Rooms</h2>
     <form action="../../handlers/reservationHandler.php" method="post">
         <input type="hidden" name="check_in_date" value="<?php echo $_SESSION['check_in_date']; ?>">
         <input type="hidden" name="check_out_date" value="<?php echo $_SESSION['check_out_date']; ?>">
         
-        <?php foreach ($availableRooms as $room) { ?>
+        <?php foreach ($availableRooms as $room) { 
+            $roomTypeId = $room['room_type_id'];
+            $imageURL = $imageURLs[$roomTypeId];
+        ?>
         <div class="form-group">
-            <label for="room_type_<?php echo $room['room_type_id']; ?>"><?php echo $room['type_name']; ?> Rooms (Available: <?php echo $room['available_rooms']; ?>):</label>
-            <input type="number" name="room_count[]" id="room_type_<?php echo $room['room_type_id']; ?>" class="form-control" min="0" max="<?php echo $room['available_rooms']; ?>">
-            <input type="hidden" name="room_type_id[]" value="<?php echo $room['room_type_id']; ?>">
-            <input type="hidden" name="rate_per_unit[]" value="<?php echo $room['unit_price']; ?>">
+            <label for="room_type_<?php echo $room['room_type_id']; ?>">
+                <?php echo $room['type_name']; ?> Rooms (Available: <?php echo $room['available_rooms']; ?>):
+            </label>
+            <div class="room-details">
+                <img src="<?php echo $imageURL; ?>" alt="<?php echo $room['type_name'];?>" class="room-image">
+                <div class="room-info">
+                    <p>Price per Unit: <?php echo $room['unit_price']; ?></p>
+                    <input type="number" name="room_count[]" id="room_type_<?php echo $room['room_type_id']; ?>" class="form-control" min="0" max="<?php echo $room['available_rooms']; ?>">
+                    <input type="hidden" name="room_type_id[]" value="<?php echo $room['room_type_id']; ?>">
+                    <input type="hidden" name="rate_per_unit[]" value="<?php echo $room['unit_price']; ?>">
+                </div>
+            </div>
         </div>
         <?php } ?>
         <button type="submit" class="btn btn-primary">Book</button>
     </form>
 </div>
+</body>
 
 <?php
 include '../../templates/footer.php';
