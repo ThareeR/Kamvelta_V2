@@ -9,12 +9,15 @@ $authController = new AuthController($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
+    $email = $_POST['email'];   // newly added
     $password = $_POST['password'];
     $role = $_POST['role'];
 
+    // Checking if the username or email already exists
     $query = "SELECT * FROM users WHERE username = :username";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':email', $email); // newly added
     $stmt->execute();
 
     if($stmt->rowCount() >0){
@@ -22,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
     else{
-        if ($authController->register($username, $password, $role)) {
+        if ($authController->register($username, $email, $password, $role)) {
             if($role=='admin'){
                 header("Location: ../views/dashboard/adminDashboard.php");
             }

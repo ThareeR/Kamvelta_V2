@@ -1,7 +1,12 @@
 <?php
 session_start();
+
+require __DIR__.'/../vendor/autoload.php';
 include '../config/database.php';
 include '../controllers/ReservationController.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -36,34 +41,77 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $checkOutDate = $_SESSION['check_out_date'];
             $totalCharge = $_SESSION['total_charge'];
 
-            $to = $guestEmail;
-            $subject = 'Reservation Confirmation';
-            $headers = "From: rasithharie@gmail.com\r\n";
-            $headers .= "Reply-To: rasithharie@gmail.com\r\n";
-            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+            $dotenv->load();
 
-            $message = '
-            <html>
-            <head>
-                <title>Reservation Confirmation</title>
-            </head>
-            <body>
-                <p>Dear ' . htmlspecialchars($guestFirstName) . ' ' . htmlspecialchars($guestLastName) . ',</p>
-                <p>Thank you for your reservation. Your reservation ID is ' . htmlspecialchars($reservationId) . '.</p>
-                <p>Check-in Date: ' . htmlspecialchars($checkInDate) . '</p>
-                <p>Check-out Date: ' . htmlspecialchars($checkOutDate) . '</p>
-                <p>Total Charge: ' . htmlspecialchars($totalCharge) . '</p>
-                <p>We look forward to your stay.</p>
-            </body>
-            </html>';
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = $_ENV['SMTP_HOST'];
+                $mail->SMTPAuth = true;
+                $mail->Username = $_ENV['SMTP_USER'];
+                $mail->Password = $_ENV['SMTP_PASSWORD'];
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = $_ENV['SMTP_PORT'];
 
-            mail($to, $subject, $message, $headers);
+                $mail->setFrom($_ENV['SMTP_USER'], 'Kamvelta Holiday Resort');
+                $mail->addAddress($guestEmail);
 
-            header('Location: ../views/reservation/reservationConfirm.php');
-            exit();
+                $mail->isHTML(true);
+                $mail->Subject = 'Reservation Confirmation';
+                $mail->Body = '
+                <html>
+                <head>
+                    <title>Reservation Confirmation</title>
+                </head>
+                <body>
+                    <p>Dear ' . htmlspecialchars($guestFirstName) . ' ' . htmlspecialchars($guestLastName) . ',</p>
+                    <p>Thank you for your reservation. Your reservation ID is ' . htmlspecialchars($reservationId) . '.</p>
+                    <p>Check-in Date: ' . htmlspecialchars($checkInDate) . '</p>
+                    <p>Check-out Date: ' . htmlspecialchars($checkOutDate) . '</p>
+                    <p>Total Charge: ' . htmlspecialchars($totalCharge) . '</p>
+                    <p>We look forward to your stay.</p>
+                </body>
+                </html>';
+
+                $mail->send();
+                header('Location: ../views/reservation/reservationConfirm.php');
+                exit();
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
         } else {
             echo "Payment failed and could not send an email.";
         }
+
+        //     $to = $guestEmail;
+        //     $subject = 'Reservation Confirmation';
+        //     $headers = "From: rasithharie@gmail.com\r\n";
+        //     $headers .= "Reply-To: rasithharie@gmail.com\r\n";
+        //     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+        //     $message = '
+        //     <html>
+        //     <head>
+        //         <title>Reservation Confirmation</title>
+        //     </head>
+        //     <body>
+        //         <p>Dear ' . htmlspecialchars($guestFirstName) . ' ' . htmlspecialchars($guestLastName) . ',</p>
+        //         <p>Thank you for your reservation. Your reservation ID is ' . htmlspecialchars($reservationId) . '.</p>
+        //         <p>Check-in Date: ' . htmlspecialchars($checkInDate) . '</p>
+        //         <p>Check-out Date: ' . htmlspecialchars($checkOutDate) . '</p>
+        //         <p>Total Charge: ' . htmlspecialchars($totalCharge) . '</p>
+        //         <p>We look forward to your stay.</p>
+        //     </body>
+        //     </html>';
+
+        //     mail($to, $subject, $message, $headers);
+
+        //     header('Location: ../views/reservation/reservationConfirm.php');
+        //     exit();
+        // } else {
+        //     echo "Payment failed and could not send an email.";
+        // }
     }
 }
 ?>

@@ -20,6 +20,7 @@
     <title>Kamvelta Holiday Resort</title>
 </head>
 <body>
+    <?php if (!defined('NO_NAVBAR')): ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar_logo"> 
             <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" id=logo alt="Kamvelta Logo" /> 
@@ -83,5 +84,6 @@
         </div>
 
     </nav>
+    <?php endif; ?>
 </body>
 </html> 

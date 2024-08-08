@@ -22,6 +22,7 @@ $guestController = new GuestController($db);
 <head>
     <title>Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         button {
         display: block;
@@ -35,13 +36,25 @@ $guestController = new GuestController($db);
     <div class="row">
         <div class="col-md-2">
             <div class="sidebar">
+                <h2>Admin Dashboard</h2>
+                <?php if (isset($_SESSION) && array_key_exists('username', $_SESSION)):?>
+                    <p>Welcome, <?php echo $_SESSION['username'];?>!</p>
+                <?php else:?>
+                    <p>Welcome, Admin!</p>
+                <?php endif;?>
+                <p>What would you like to do?</p>
                 <ul>
                     <li><a href="#" class="active">Dashboard</a></li>
-                    <li><a href="manageCustomers.php">Manage Customers</a></li>
+                    <li><a href="#" onclick="loadPage('manageCustomers')">Manage Customers</a></li>
+                    <li><a href="#" onclick="loadPage('manageReservations')">Manage Reservations</a></li>
+                    <li><a href="#" onclick="loadPage('manageRooms')">Manage Rooms</a></li>
+                    <li><a href="#" onclick="loadPage('manageBanquetHall')">Manage Banquet Hall</a></li>
+                    <li><a href="#" onclick="loadPage('../auth/adminRegistration')">Admin Registration</a></li>
+                    <!-- <li><a href="manageCustomers.php">Manage Customers</a></li>
                     <li><a href="manageReservations.php">Manage Reservations</a></li>
                     <li><a href="manageRooms.php">Manage Rooms</a></li>
                     <li><a href="manageBanquetHall.php">Manage Banquet Hall</a></li>
-                    <li><a href="../auth/adminRegistration.php"><br>Admin Registration</a></li>
+                    <li><a href="../auth/adminRegistration.php"><br>Admin Registration</a></li> -->
                     <!-- <li><a href="managePayments.php">Manage Payments</a></li>
                     <li><a href="manageEmployees.php">Manage Employees</a></li> -->
                 </ul>
@@ -50,13 +63,9 @@ $guestController = new GuestController($db);
 
     <div class="col-md-10">
         <div class="content">
-            <h2>Admin Dashboard</h2>
-            <?php if (isset($_SESSION) && array_key_exists('username', $_SESSION)):?>
-                <p>Welcome, <?php echo $_SESSION['username'];?>!</p>
-            <?php else:?>
-                <p>Welcome, Admin!</p>
-            <?php endif;?>
-            <p>What would you like to do?</p>
+
+            <!-- content will be loaded here -->
+            <div id="page-content"></div>
 
             <!-- Dashboard Stats -->
 
@@ -103,6 +112,16 @@ $guestController = new GuestController($db);
                         <canvas id="monthlyRoomReservationsChart"></canvas>
                     </div>
                     <script>
+                        function loadPage(page) {
+                            $.ajax({
+                                type: "GET",
+                                url: page + ".php",
+                                success: function(data) {
+                                    $("#page-content").html(data);
+                                }
+                            });
+                        }
+
                         // Fetch Monthly Room Reservations
                         fetch('../reports/getMonthlyRoomReservations.php')
                             .then(response => response.json())

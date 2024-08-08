@@ -10,10 +10,11 @@ class AuthController {
         $this->user = new \User($db);
     }
 
-    public function register($username, $password, $role) {
+    public function register($username, $password, $role, $email) {
         $this->user->username = $username;
         $this->user->password = password_hash($password, PASSWORD_BCRYPT);
         $this->user->role = $role;
+        $this->user->email = $email;    // newly added
 
         if ($this->user->create()) {
             return true;

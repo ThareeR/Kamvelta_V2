@@ -132,10 +132,10 @@ class BanquetHallReservationController {
             $startTime = $_POST['start_time'];
             $endTime = $_POST['end_time'];
             $numGuests = $_POST['num_guests'];
-            // Other personal information fields
+            
 
             // Add reservation to the database
-            $this->model->addReservation($date, $startTime, $endTime, $numGuests /*, other fields */);
+            $this->model->addReservation($date, $startTime, $endTime, $numGuests);
 
             // Show confirmation message
             include '../views/reservation/hallConfirmation.php';

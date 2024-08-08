@@ -116,6 +116,15 @@ class GuestController {
         return null;
     }
 
+    public function search($searchQuery) {
+        $query = "SELECT * FROM guests WHERE first_name LIKE :search OR last_name LIKE :search OR nic LIKE :search";
+        $stmt = $this->db->prepare($query);
+        $searchQuery = '%' . $searchQuery . '%'; // Add wildcards for LIKE query
+        $stmt->bindParam(':search', $searchQuery);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
 

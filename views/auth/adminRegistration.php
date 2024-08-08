@@ -1,4 +1,6 @@
-<?php include '../../templates/header.php'; ?>
+<?php 
+define('NO_NAVBAR', true);
+include '../../templates/header.php'; ?>
 <div class="container mt-5">
     <h2>Admin Registration</h2>
     <?php if (isset($_GET['error']) && $_GET['error'] == 'registration_failed'): ?>
@@ -8,6 +10,10 @@
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>

@@ -1,4 +1,5 @@
 <?php
+define('NO_NAVBAR', true);
 include_once '../../templates/header.php';
 include_once '../../config/database.php';
 include_once '../../controllers/BanquetHallController.php';
@@ -59,6 +60,22 @@ $halls = $controller->index();
             margin: 0 5px;
         }
 
+        .btn-group button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border: 1px solid #000;
+            text-align: center;
+            /* height: 30px;
+            display: inline-block;
+            vertical-align: middle; */
+        }
+
+        .btn-group form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+
         .container {
             padding: 20px;
         }
@@ -73,6 +90,7 @@ $halls = $controller->index();
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+            border: 1px solid #ddd;
         }
 
         .table th {
@@ -121,11 +139,14 @@ $halls = $controller->index();
                 <td><?php echo $hall['capacity']; ?></td>
                 <td><?php echo $hall['charge_per_hour']; ?></td>
                 <td>
-                    <button onclick="editHall(<?php echo htmlspecialchars(json_encode($hall)); ?>)">Edit</button>
-                    <form method="POST" action="" style="display:inline;">
-                        <input type="hidden" name="hall_id" value="<?php echo $hall['hall_id']; ?>">
-                        <button type="submit" name="delete">Delete</button>
-                    </form>
+                    <div class="btn-group">
+                        <button onclick="editHall(<?php echo htmlspecialchars(json_encode($hall)); ?>)">Edit</button>
+                        <form method="POST" action="" style="display:inline;">
+                            <input type="hidden" name="hall_id" value="<?php echo $hall['hall_id']; ?>">
+                            <!-- <button onclick="editHall(<?php // echo htmlspecialchars(json_encode($hall)); ?>)">Edit</button> -->
+                            <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this Banquet Hall?')">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>
